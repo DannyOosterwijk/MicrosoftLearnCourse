@@ -14,6 +14,7 @@ int maxPets = 8;
 string? readResult;
 string menuSelection = "";
 decimal decimalDonation = 0;
+string[] searchingIcons = {" /\t2", " --\t1", " \\\t1", " *\t0"};
 
 // #3 array used to store runtime data, there is no persisted data
 string[,] ourAnimals = new string[maxPets, 7];
@@ -132,17 +133,34 @@ do
         case "2":
             // Display all dogs with a specified characteristic
             string dogCharacteristic = "";
+            string[] dogKeywords = { "" };
 
             while (dogCharacteristic == "")
             {
                 // have the user enter physical characteristics to search for
-                Console.WriteLine($"\nEnter one desired dog characteristics to search for");
+                Console.WriteLine($"\nEnter desired dog characteristics sepperated by a comma(,) to search for");
                 readResult = Console.ReadLine();
                 if (readResult != null)
                 {
                     dogCharacteristic = readResult.ToLower().Trim();
+                    dogKeywords = dogCharacteristic.Split(",");
+                    Array.Sort(dogKeywords);
                 }
-            } 
+            }
+
+            //Searching animation
+            Console.WriteLine();
+            for (int i = 0; i < 4; i++)
+            {
+                Console.WriteLine("Searching " + searchingIcons[i]);
+                Thread.Sleep(500);
+                //erase the last line of the console
+                Console.SetCursorPosition(0, Console.CursorTop - 1);
+                Console.Write(new string(' ', Console.BufferWidth));
+                Console.SetCursorPosition(0, Console.CursorTop); 
+            }
+            
+            
 
             // loop through the ourAnimals array to search for matching animals
             bool matchfound = false;
@@ -150,11 +168,23 @@ do
             {
                 if (ourAnimals[i, 1].Contains("dog"))
                 {
-                    //check if any of  the descriptions contain the key word
-                    if (ourAnimals[i, 4].ToLower().Contains(dogCharacteristic) || ourAnimals[i, 5].ToLower().Contains(dogCharacteristic))
+                    //go through all of the key words
+                    string matchingKeyWords = "";
+                    foreach (string key in dogKeywords)
+                    {
+                        //check if any of the descriptions contain the key word
+                        if (ourAnimals[i, 4].ToLower().Contains(key) || ourAnimals[i, 5].ToLower().Contains(key))
+                        {
+                            matchingKeyWords += matchingKeyWords != "" ? ", " + key : key;
+                        }
+                    }
+                    
+                    //If there are matching key words
+                    if (matchingKeyWords != "")
                     {
                         //print all animal information to the console
                         Console.WriteLine();
+                        Console.WriteLine("This dog matches characteristics: " + matchingKeyWords);
                         for (int j = 0; j < 7; j++)
                         {
                             Console.WriteLine(ourAnimals[i, j]);
