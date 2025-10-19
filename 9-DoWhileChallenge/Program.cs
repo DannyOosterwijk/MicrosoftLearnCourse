@@ -51,19 +51,23 @@ do
 
 string[] myStrings = new string[2] { "I like pizza. I like roast chicken. I like salad", "I like all three of the menu choices" };
 
+//write the string above to console seperated by every period symbol
 foreach (string str in myStrings)
 {
     string remainingString = str;
     do
     {
+        //check if there is a period symbol left
         int periodLocation = remainingString.IndexOf('.');
 
+        //if no peroid left, print the remaining string
         if (periodLocation == -1)
         {
             Console.WriteLine(remainingString.TrimStart());
             break;
         }
 
+        //get the string up to the period and print it
         string cutString = remainingString.Substring(0, periodLocation);
         remainingString = remainingString.Remove(0, periodLocation + 1);
 
