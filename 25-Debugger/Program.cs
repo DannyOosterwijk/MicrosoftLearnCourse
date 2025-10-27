@@ -1,36 +1,16 @@
 ﻿//implement the visual studio code debbuging tools
 
-/* 
-This code uses a names array and corresponding methods to display
-greeting messages
+/*  
+This code instantiates a value and then calls the ChangeValue method
+to update the value. The code then prints the updated value to the console.
 */
+int x = 5;
 
-string[] names = new string[] { "Sophia", "Andrew", "AllGreetings" };
+x = ChangeValue();
 
-foreach (string name in names)
+Console.WriteLine(x);
+
+int ChangeValue() 
 {
-    string messageText = "";
-
-
-    if (name == "Sophia")
-        messageText = SophiaMessage();
-    else if (name == "Andrew")
-        messageText = AndrewMessage();
-    else if (name == "AllGreetings")
-        messageText = SophiaMessage() + "\n\r" + AndrewMessage();
-
-    Console.WriteLine(messageText + "\n\r");
-}
-
-bool pauseCode = true;
-while (pauseCode == true);
-
-static string SophiaMessage()
-{
-    return "Hello, my name is Sophia.";
-}
-
-static string AndrewMessage()
-{
-    return "Hi, my name is Andrew. Good to meet you.";
+    return 10;
 }
